@@ -96,6 +96,9 @@ class MovieDetailsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         configureViews()
+
+        let favoriteButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(updateMovieFavoriteState))
+        self.navigationItem.rightBarButtonItem  = favoriteButton
     }
 
     required init?(coder: NSCoder) {
@@ -105,6 +108,10 @@ class MovieDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "Movie Details"
+    }
+
+    @objc private func updateMovieFavoriteState() {
+        print("Save Movie")
     }
 }
 
