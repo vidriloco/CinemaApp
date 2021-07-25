@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  MovieListViewController.swift
 //  CineApp
 //
 //  Created by Alejandro Cruz on 24/07/2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class MovieListViewController: UIViewController {
     private var nowPlayingViewController: MovieCollectionViewController?
     private var popularViewController: MovieCollectionViewController?
 
@@ -21,30 +21,15 @@ class HomeViewController: UIViewController {
 
     public init() {
         super.init(nibName: nil, bundle: nil)
+        title = "List of movies"
 
-        configureChildren()
+        view.addSubview(stackView)
     }
 
-    private func configureChildren() {
-        view.addSubview(stackView)
-
-        let nowPlayingList = [
-            Movie(title: "Brave", image: UIImage(named: "brave")!, color: .red),
-            Movie(title: "Toy Story", image: UIImage(named: "buzz")!, color: .blue),
-            Movie(title: "Finding Nemo", image: UIImage(named: "nemo")!, color: .green)
-        ]
-
-        let nowPlayingVC =  MovieCollectionViewController(with: nowPlayingList)
-
-        let popularList = [
-            Movie(title: "Monsters INC", image: UIImage(named: "monsters")!, color: .red),
-            Movie(title: "Wall-E", image: UIImage(named: "wall-e")!, color: .blue)
-        ]
-
-        let popularVC = MovieCollectionViewController(with: popularList)
-
-        addContentController(nowPlayingVC)
-        addContentController(popularVC)
+    func configure(viewControllers: [UIViewController]) {
+        viewControllers.forEach { viewController in
+            addContentController(viewController)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -53,7 +38,6 @@ class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        title = "Available Films"
 
         guard let nowPlayingVC = children.first as? MovieCollectionViewController else  {
             fatalError("NowPlayingViewController wasn't set")

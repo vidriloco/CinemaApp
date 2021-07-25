@@ -9,7 +9,7 @@ import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
 
-    fileprivate let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -18,7 +18,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    fileprivate let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -26,7 +26,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    fileprivate var stackView: UIStackView = {
+    private var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical

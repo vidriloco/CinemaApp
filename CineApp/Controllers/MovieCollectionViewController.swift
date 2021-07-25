@@ -8,16 +8,32 @@
 import UIKit
 
 struct Movie {
+
     let title: String
     let image: UIImage
-    let color: UIColor
+
+    var genres = [Genre]()
+    var releaseDate: Date?
+    var popularity: Int?
+    var overview: String?
+
+    struct Genre {
+        let name: String
+        let id: Int
+    }
+}
+
+protocol MovieDetailsDelegate {
+    func didSelect(movie: Movie, from controller: UIViewController)
 }
 
 class MovieCollectionViewController: UIViewController {
 
-    let movies: [Movie]
+    public var delegate: MovieDetailsDelegate?
 
-    let reuseIdentifier = String(describing: MovieCollectionViewCell.self)
+    private let movies: [Movie]
+
+    private let reuseIdentifier = String(describing: MovieCollectionViewCell.self)
 
     private var collectionView: UICollectionView = {
 
@@ -102,6 +118,11 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
         cell.configure(with: movie)
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = movies[indexPath.item]
+        delegate?.didSelect(movie: movie, from: self)
     }
 }
 
