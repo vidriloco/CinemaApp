@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieCollectionViewCell: UICollectionViewCell {
 
@@ -58,8 +59,13 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(with movie: Movie) {
-        imageView.image = movie.image
         titleLabel.text = movie.title
+        imageView.sd_setImage(with: movie.url, completed: nil)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
 }
 

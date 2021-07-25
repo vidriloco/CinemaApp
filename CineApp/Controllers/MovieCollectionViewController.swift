@@ -7,22 +7,6 @@
 
 import UIKit
 
-struct Movie {
-
-    let title: String
-    let image: UIImage
-
-    var genres = [Genre]()
-    var releaseDate: Date?
-    var popularity: Int?
-    var overview: String?
-
-    struct Genre {
-        let name: String
-        let id: Int
-    }
-}
-
 protocol MovieDetailsDelegate {
     func didSelect(movie: Movie, from controller: UIViewController)
 }
@@ -31,7 +15,13 @@ class MovieCollectionViewController: UIViewController {
 
     public var delegate: MovieDetailsDelegate?
 
-    private let movies: [Movie]
+    public var movies = [Movie]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
 
     private let reuseIdentifier = String(describing: MovieCollectionViewCell.self)
 
@@ -47,8 +37,7 @@ class MovieCollectionViewController: UIViewController {
         return collectionView
     }()
 
-    public init(with movies: [Movie]) {
-        self.movies = movies
+    public init() {
         super.init(nibName: nil, bundle: nil)
 
         collectionView.backgroundColor = .white
@@ -111,13 +100,17 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                            for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
+        let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
 
-        let movie = movies[indexPath.item]
-        cell.configure(with: movie)
+        if let cell = dequeuedCell as? MovieCollectionViewCell {
+            let movie = movies[indexPath.item]
+            
+            cell.configure(with: movie)
 
-        return cell
+            return cell
+        }
+
+        return dequeuedCell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -9,30 +9,33 @@ import UIKit
 
 class MoviesCoordinator: Coordinator {
     private let presenter: UINavigationController
+    private let repository: MovieRepository
 
-    init(presenter: UINavigationController) {
+    init(presenter: UINavigationController, repository: MovieRepository) {
         self.presenter = presenter
+        self.repository = repository
     }
 
     func start() {
         let moviesListViewController = MovieListViewController()
 
-        let nowPlayingList = [
-            Movie(title: "Brave", image: UIImage(named: "brave")!, genres: [Movie.Genre(name: "Horror", id: 1), Movie.Genre(name: "Action", id: 2)], releaseDate: Date(), popularity: 2, overview: "Lorem ipsum estu masaquata kinder Lorem ipsum estu masaquata kinder"),
-            Movie(title: "Toy Story", image: UIImage(named: "buzz")!),
-            Movie(title: "Finding Nemo", image: UIImage(named: "nemo")!)
-        ]
-
-        let nowPlayingVC =  MovieCollectionViewController(with: nowPlayingList)
+        let nowPlayingVC =  MovieCollectionViewController()
         nowPlayingVC.delegate = self
 
-        let popularList = [
-            Movie(title: "Monsters INC", image: UIImage(named: "monsters")!),
-            Movie(title: "Wall-E", image: UIImage(named: "wall-e")!)
-        ]
+        repository.getMoviesNowPlaying { movies in
+            nowPlayingVC.movies = movies
+        } failure: { error in
+            print(error)
+        }
 
-        let popularVC = MovieCollectionViewController(with: popularList)
+        let popularVC = MovieCollectionViewController()
         popularVC.delegate = self
+
+        repository.getPopularMovies { movies in
+            popularVC.movies = movies
+        } failure: { error in
+            print(error)
+        }
 
         moviesListViewController.configure(viewControllers: [nowPlayingVC, popularVC])
         presenter.pushViewController(moviesListViewController, animated: true)

@@ -18,11 +18,13 @@ class RootCoordinator: Coordinator {
 
     let moviesCoordinator: MoviesCoordinator
 
+    let movieRepository = MovieRepository()
+
     init(window: UIWindow) {
         self.window = window
 
         self.rootViewController = UINavigationController()
-        self.moviesCoordinator = MoviesCoordinator(presenter: rootViewController)
+        self.moviesCoordinator = MoviesCoordinator(presenter: rootViewController, repository: movieRepository)
     }
 
     func start() {

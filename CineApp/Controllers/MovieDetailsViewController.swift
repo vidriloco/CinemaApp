@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieDetailsViewController: UIViewController {
 
@@ -134,11 +135,12 @@ extension MovieDetailsViewController {
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
 
-        imageView.image = movie.image
+        imageView.sd_setImage(with: movie.url, completed: nil)
+
         titleLabel.text = movie.title
         overviewLabel.text = movie.overview
         genresLabel.text = movie.genres.map { $0.name }.joined(separator: ", ")
         releaseDateLabel.text = movie.releaseDate?.description
-        ratingLabel.text = "\(movie.popularity)"
+        ratingLabel.text = String(describing: movie.popularity)
     }
 }
