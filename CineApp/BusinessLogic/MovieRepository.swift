@@ -18,6 +18,22 @@ class MovieRepository {
         return "http://image.tmdb.org/t/p/original/\(imagePath)"
     }
 
+    func getMovieGenres(completion: @escaping ([Genre]) -> Void, failure: @escaping (Error) -> Void) {
+        let apiClient = APIJSONClient<GenreCollection>()
+
+        let params = ["api_key": apiKey]
+        let endpoint = APIEndpoint(host: providerURL, path: "/3/genre/movie/list").with(params: params)
+
+        apiClient.execute(at: endpoint) { response in
+            switch response {
+            case .success(let genreCollection):
+                completion(genreCollection.genres.map { $0.toGenre() })
+            case .fail(let error):
+                failure(error)
+            }
+        }
+    }
+
     func getMoviesNowPlaying(completion: @escaping ([Movie]) -> Void, failure: @escaping (Error) -> Void) {
         let params = ["api_key": apiKey]
         let endpoint = APIEndpoint(host: providerURL, path: "/3/movie/now_playing").with(params: params)
@@ -48,14 +64,26 @@ extension MovieRepository {
             let releaseDate: String
             let id: Int
             let originalTitle: String
-            let popularity: Double
+            let voteAverage: Double
+            let genres: [Int]
 
             private enum CodingKeys : String, CodingKey {
                 case posterPath = "poster_path"
                 case releaseDate = "release_date"
                 case originalTitle = "original_title"
-                case overview, id, popularity
+                case voteAverage = "vote_average"
+                case genres = "genre_ids"
+                case overview, id
             }
+        }
+    }
+
+    struct GenreCollection: Decodable {
+        let genres: [Genre]
+
+        struct Genre: Decodable {
+            let id: Int
+            let name: String
         }
     }
 }

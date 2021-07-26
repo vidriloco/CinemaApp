@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol MovieDetailsDelegate {
+protocol MovieListDelegate {
     func didSelect(movie: Movie, from controller: UIViewController)
 }
 
 class MovieCollectionViewController: UIViewController {
 
-    public var delegate: MovieDetailsDelegate?
+    public var delegate: MovieListDelegate?
 
     public var movies = [Movie]() {
         didSet {

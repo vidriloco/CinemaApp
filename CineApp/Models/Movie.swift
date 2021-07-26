@@ -12,20 +12,32 @@ struct Movie {
     let title: String
     var imagePath: String
 
-    var genres = [Genre]()
+    var genreIds = [Int]()
     var releaseDate: Date?
-    var popularity: Double?
-    var overview: String?
+    var rating: Double?
+    var overview: String
 
-    struct Genre {
-        let name: String
-        let id: Int
-    }
+    var genres = [Genre]()
 }
 
 extension Movie {
     var url: URL? {
         return URL(string: imagePath)
+    }
+
+    var releaseInfo: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.autoupdatingCurrent
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        guard let releaseDate = releaseDate else { return "Date of release not available" }
+        let dateOfRelease = dateFormatter.string(from: releaseDate)
+
+        return "Released on: \(dateOfRelease)"
+    }
+
+    var ratingInfo: String {
+        return "Rating: \(rating?.description ?? "0")"
     }
 }
 
@@ -42,9 +54,9 @@ extension MovieRepository.MovieCollection.Movie {
         return Movie(id: id,
                      title: originalTitle,
                      imagePath: movieImagePathMapper(self.posterPath),
-                     genres: [],
+                     genreIds: genres,
                      releaseDate: dateOfRelease,
-                     popularity: popularity,
+                     rating: voteAverage,
                      overview: overview)
     }
 }

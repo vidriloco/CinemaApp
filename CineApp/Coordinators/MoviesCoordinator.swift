@@ -43,11 +43,20 @@ class MoviesCoordinator: Coordinator {
 
 }
 
-extension MoviesCoordinator : MovieDetailsDelegate {
+extension MoviesCoordinator : MovieListDelegate {
 
     func didSelect(movie: Movie, from controller: UIViewController) {
-        let vc = MovieDetailsViewController(with: movie)
-        controller.navigationController?.pushViewController(vc, animated: true)
+        let movieDetails = MovieDetailsViewController()
+
+        repository.getMovieGenres { genres in
+            DispatchQueue.main.async {
+                movieDetails.configure(with: movie, genres: genres)
+            }
+        } failure: { error in
+            print(error)
+        }
+
+        controller.navigationController?.pushViewController(movieDetails, animated: true)
     }
     
 }
