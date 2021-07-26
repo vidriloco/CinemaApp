@@ -23,6 +23,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
 
         return label
     }()
@@ -33,6 +35,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
+        stackView.spacing = 10
 
         return stackView
     }()
@@ -46,7 +49,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
         stackView.addArrangedSubview(titleLabel)
 
         NSLayoutConstraint.activate([
-            titleLabel.heightAnchor.constraint(equalToConstant: Constants.titleHeightConstant),
             stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
@@ -66,11 +68,5 @@ class MovieCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-    }
-}
-
-extension MovieCollectionViewCell {
-    struct Constants {
-        static let titleHeightConstant: CGFloat = 30
     }
 }
