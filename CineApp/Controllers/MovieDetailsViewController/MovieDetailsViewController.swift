@@ -8,16 +8,29 @@
 import UIKit
 import SDWebImage
 
+protocol MovieDetailsDelegate {
+    func saveMovieAsFavorite(_ movie: Movie)
+}
+
 class MovieDetailsViewController: UITableViewController {
 
-    enum MovieDetails {
+    public var delegate: MovieDetailsDelegate?
+
+    enum MovieDetailEntries {
         case image(url: URL?)
         case title(text: String)
         case description(text: String)
         case caption(text: String)
     }
 
-    private var detailEntries = [MovieDetails]()
+    private var detailEntries = [MovieDetailEntries]()
+
+    var viewModel: MovieDetailsViewModel? {
+        didSet {
+            guard let viewModel = viewModel else { return }
+            configure(with: viewModel)
+        }
+    }
 
     private let movieTextIdentifier = String(describing: MovieTextViewCell.self)
     private let moviePosterIdentifier = String(describing: MoviePosterViewCell.self)
@@ -43,20 +56,18 @@ class MovieDetailsViewController: UITableViewController {
     }
 
     @objc private func updateMovieFavoriteState() {
-        
+
     }
 
-    func configure(with movie: Movie, genres: [Genre]) {
-
-        let movieGenres = genres.compactMap { movie.genreIds.contains($0.id) ? $0.name : nil }
+    private func configure(with viewModel: MovieDetailsViewModel) {
 
         self.detailEntries = [
-            .image(url: movie.url),
-            .title(text: movie.title),
-            .description(text: movie.overview),
-            .caption(text: movie.releaseInfo),
-            .caption(text: movie.ratingInfo),
-            .caption(text: movieGenres.joined(separator: ", "))
+            .image(url: viewModel.imageURL),
+            .title(text: viewModel.title),
+            .description(text: viewModel.description),
+            .caption(text: viewModel.releaseInfo),
+            .caption(text: viewModel.ratingInfo),
+            .caption(text: viewModel.genres)
         ]
 
         tableView.reloadData()
@@ -110,4 +121,22 @@ extension MovieDetailsViewController {
         static let imageHeight: CGFloat = 400
     }
 
+    struct MovieDetailsViewModel {
+
+        let title: String
+        let description: String
+        let releaseInfo: String
+        let ratingInfo: String
+        let genres: String
+        let imageURL: URL?
+
+        init(movie: Movie, genresList: [Genre]) {
+            self.title = movie.title
+            self.description = movie.overview
+            self.releaseInfo = movie.releaseInfo
+            self.ratingInfo = movie.ratingInfo
+            self.genres = genresList.compactMap { movie.genreIds.contains($0.id) ? $0.name : nil }.joined(separator: ", ")
+            self.imageURL = movie.url
+        }
+    }
 }

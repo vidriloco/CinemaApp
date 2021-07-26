@@ -29,7 +29,7 @@ class MovieTextViewCell: UITableViewCell {
         return label
     }()
 
-    func configureWith(_ entry: MovieDetailsViewController.MovieDetails) {
+    func configureWith(_ entry: MovieDetailsViewController.MovieDetailEntries) {
         configureGenericTexLabel()
 
         switch entry {

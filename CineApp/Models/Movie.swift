@@ -16,8 +16,6 @@ struct Movie {
     var releaseDate: Date?
     var rating: Double?
     var overview: String
-
-    var genres = [Genre]()
 }
 
 extension Movie {

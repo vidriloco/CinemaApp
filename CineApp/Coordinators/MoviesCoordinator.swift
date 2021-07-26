@@ -46,17 +46,18 @@ class MoviesCoordinator: Coordinator {
 extension MoviesCoordinator : MovieListDelegate {
 
     func didSelect(movie: Movie, from controller: UIViewController) {
-        let movieDetails = MovieDetailsViewController()
+        let movieDetailsViewController = MovieDetailsViewController()
 
         repository.getMovieGenres { genres in
             DispatchQueue.main.async {
-                movieDetails.configure(with: movie, genres: genres)
+                let movieDetailsVM = MovieDetailsViewController.MovieDetailsViewModel(movie: movie, genresList: genres)
+                movieDetailsViewController.viewModel = movieDetailsVM
             }
         } failure: { error in
             print(error)
         }
 
-        controller.navigationController?.pushViewController(movieDetails, animated: true)
+        controller.navigationController?.pushViewController(movieDetailsViewController, animated: true)
     }
     
 }
