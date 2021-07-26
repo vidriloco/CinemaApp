@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 protocol MovieDetailsDelegate {
-    func saveMovieAsFavorite(_ movie: Movie)
+    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController)
 }
 
 class MovieDetailsViewController: UITableViewController {
@@ -38,9 +38,6 @@ class MovieDetailsViewController: UITableViewController {
     public init() {
         super.init(nibName: nil, bundle: nil)
 
-        let favoriteButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(updateMovieFavoriteState))
-        self.navigationItem.rightBarButtonItem  = favoriteButton
-
         tableView.register(MovieTextViewCell.self, forCellReuseIdentifier: movieTextIdentifier)
         tableView.register(MoviePosterViewCell.self, forCellReuseIdentifier: moviePosterIdentifier)
         tableView.allowsSelection = false
@@ -55,8 +52,26 @@ class MovieDetailsViewController: UITableViewController {
         title = "Movie Details"
     }
 
-    @objc private func updateMovieFavoriteState() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
+        updateNavigationItems()
+    }
+
+    @objc private func updateMovieFavoriteStatus() {
+        guard let viewModel = viewModel else { return }
+        
+        delegate?.updateMovieFavoriteStatus(viewModel, from: self)
+        updateNavigationItems()
+    }
+
+    private func updateNavigationItems() {
+        guard let movieDetails = viewModel else { return }
+
+        let title = MovieLocalStore.shared.contains(movieDetails) ? "Unfavorite" : "Favorite"
+
+        let favoriteButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(updateMovieFavoriteStatus))
+        self.navigationItem.rightBarButtonItem  = favoriteButton
     }
 
     private func configure(with viewModel: MovieDetailsViewModel) {
@@ -121,7 +136,7 @@ extension MovieDetailsViewController {
         static let imageHeight: CGFloat = 400
     }
 
-    struct MovieDetailsViewModel {
+    struct MovieDetailsViewModel: Codable {
 
         let title: String
         let description: String
@@ -139,4 +154,8 @@ extension MovieDetailsViewController {
             self.imageURL = movie.url
         }
     }
+}
+
+extension MovieDetailsViewController.MovieDetailsViewModel : Hashable {
+
 }

@@ -22,6 +22,8 @@
 		72064BBE26AC6DF7004B7A3A /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72064BBD26AC6DF7004B7A3A /* MovieCollectionViewCell.swift */; };
 		722078AE26AED751006C6D4D /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722078AD26AED751006C6D4D /* Genre.swift */; };
 		722078B326AEF993006C6D4D /* MoviePosterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722078B226AEF993006C6D4D /* MoviePosterViewCell.swift */; };
+		7257E80226AF4B2F00EFAF01 /* FavoriteMoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7257E80126AF4B2F00EFAF01 /* FavoriteMoviesListViewController.swift */; };
+		7257E80A26AF55BA00EFAF01 /* MovieLocalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7257E80926AF55BA00EFAF01 /* MovieLocalStore.swift */; };
 		729EEDCF26AC77EC003C2A53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729EEDCE26AC77EC003C2A53 /* SceneDelegate.swift */; };
 		729EEDDA26AD9A70003C2A53 /* MoviesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729EEDD926AD9A70003C2A53 /* MoviesCoordinator.swift */; };
 		729EEDDF26AD9B04003C2A53 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729EEDDE26AD9B04003C2A53 /* MovieDetailsViewController.swift */; };
@@ -80,6 +82,8 @@
 		72064BBD26AC6DF7004B7A3A /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		722078AD26AED751006C6D4D /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		722078B226AEF993006C6D4D /* MoviePosterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterViewCell.swift; sourceTree = "<group>"; };
+		7257E80126AF4B2F00EFAF01 /* FavoriteMoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesListViewController.swift; sourceTree = "<group>"; };
+		7257E80926AF55BA00EFAF01 /* MovieLocalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLocalStore.swift; sourceTree = "<group>"; };
 		729EEDCE26AC77EC003C2A53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		729EEDD926AD9A70003C2A53 /* MoviesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesCoordinator.swift; sourceTree = "<group>"; };
 		729EEDDE26AD9B04003C2A53 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				72064BB026AC6A07004B7A3A /* MovieListViewController.swift */,
 				72064BB826AC6DAB004B7A3A /* MovieCollectionViewController.swift */,
 				72064BBD26AC6DF7004B7A3A /* MovieCollectionViewCell.swift */,
+				7257E80126AF4B2F00EFAF01 /* FavoriteMoviesListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 			children = (
 				729EEE0F26AE03B8003C2A53 /* Movie.swift */,
 				722078AD26AED751006C6D4D /* Genre.swift */,
+				7257E80926AF55BA00EFAF01 /* MovieLocalStore.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -529,7 +535,9 @@
 				729EEDE826ADE56E003C2A53 /* MovieRepository.swift in Sources */,
 				729EEDFC26ADE83C003C2A53 /* Result.swift in Sources */,
 				722078AE26AED751006C6D4D /* Genre.swift in Sources */,
+				7257E80226AF4B2F00EFAF01 /* FavoriteMoviesListViewController.swift in Sources */,
 				722078B326AEF993006C6D4D /* MoviePosterViewCell.swift in Sources */,
+				7257E80A26AF55BA00EFAF01 /* MovieLocalStore.swift in Sources */,
 				72064BA826AC69AA004B7A3A /* RootCoordinator.swift in Sources */,
 				729EEDDA26AD9A70003C2A53 /* MoviesCoordinator.swift in Sources */,
 				72064BB926AC6DAB004B7A3A /* MovieCollectionViewController.swift in Sources */,

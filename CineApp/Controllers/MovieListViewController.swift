@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol HomeViewDelegate {
+    func willDisplayFavoriteMovies(from controller: UIViewController)
+}
+
 class MovieListViewController: UIViewController {
     private var nowPlayingViewController: MovieCollectionViewController?
     private var popularViewController: MovieCollectionViewController?
+
+    var delegate: HomeViewDelegate?
 
     private var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -22,6 +28,9 @@ class MovieListViewController: UIViewController {
     public init() {
         super.init(nibName: nil, bundle: nil)
         title = "List of movies"
+
+        let favoritesListButton = UIBarButtonItem(title: "Favorites", style: .plain, target: self, action: #selector(showFavoriteMovies))
+        self.navigationItem.rightBarButtonItem  = favoritesListButton
 
         view.addSubview(stackView)
     }
@@ -63,5 +72,9 @@ class MovieListViewController: UIViewController {
         stackView.addArrangedSubview(child.view)
         child.didMove(toParent: self)
         child.view.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    @objc private func showFavoriteMovies() {
+        delegate?.willDisplayFavoriteMovies(from: self)
     }
 }

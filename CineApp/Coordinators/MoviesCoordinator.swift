@@ -18,6 +18,7 @@ class MoviesCoordinator: Coordinator {
 
     func start() {
         let moviesListViewController = MovieListViewController()
+        moviesListViewController.delegate = self
 
         let nowPlayingVC =  MovieCollectionViewController()
         nowPlayingVC.delegate = self
@@ -48,9 +49,12 @@ extension MoviesCoordinator : MovieListDelegate {
     func didSelect(movie: Movie, from controller: UIViewController) {
         let movieDetailsViewController = MovieDetailsViewController()
 
+        movieDetailsViewController.delegate = self
+
         repository.getMovieGenres { genres in
             DispatchQueue.main.async {
                 let movieDetailsVM = MovieDetailsViewController.MovieDetailsViewModel(movie: movie, genresList: genres)
+                
                 movieDetailsViewController.viewModel = movieDetailsVM
             }
         } failure: { error in
@@ -60,4 +64,55 @@ extension MoviesCoordinator : MovieListDelegate {
         controller.navigationController?.pushViewController(movieDetailsViewController, animated: true)
     }
     
+}
+
+extension MoviesCoordinator : MovieDetailsDelegate {
+    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
+        if MovieLocalStore.shared.contains(movie) {
+
+            MovieLocalStore.shared.delete(movie)
+
+            let viewController = UIAlertController(title: "Action",
+                                                   message: "\(movie.title) was removed from your favorite movies",
+                                                   preferredStyle: .alert)
+            viewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+            controller.present(viewController, animated: true, completion: nil)
+
+        } else {
+            MovieLocalStore.shared.save(movie)
+
+            let viewController = UIAlertController(title: "Action",
+                                                   message: "\(movie.title) was saved to your favorite movies",
+                                                   preferredStyle: .alert)
+            viewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+            controller.present(viewController, animated: true, completion: nil)
+        }
+    }
+
+}
+
+extension MoviesCoordinator: HomeViewDelegate {
+    func willDisplayFavoriteMovies(from controller: UIViewController) {
+        guard let movies = MovieLocalStore.shared.storedMovies else {
+            return
+        }
+
+        let favMoviesListViewController = FavoriteMoviesListViewController()
+        favMoviesListViewController.movieEntryList = movies
+        favMoviesListViewController.delegate = self
+
+        controller.navigationController?.pushViewController(favMoviesListViewController, animated: true)
+    }
+}
+
+extension MoviesCoordinator: FavoriteMoviesListDelegate {
+    func didSelect(movieDetailsViewModel: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
+        let movieDetailsViewController = MovieDetailsViewController()
+        movieDetailsViewController.delegate = self
+
+        movieDetailsViewController.viewModel = movieDetailsViewModel
+        controller.navigationController?.pushViewController(movieDetailsViewController, animated: true)
+    }
 }
