@@ -37,6 +37,7 @@ class MovieDetailsViewController: UITableViewController {
 
     public init() {
         super.init(nibName: nil, bundle: nil)
+        title = "Movie Details"
 
         tableView.register(MovieTextViewCell.self, forCellReuseIdentifier: movieTextIdentifier)
         tableView.register(MoviePosterViewCell.self, forCellReuseIdentifier: moviePosterIdentifier)
@@ -49,12 +50,7 @@ class MovieDetailsViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        title = "Movie Details"
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
+        
         updateNavigationItems()
     }
 
@@ -136,7 +132,7 @@ extension MovieDetailsViewController {
         static let imageHeight: CGFloat = 400
     }
 
-    struct MovieDetailsViewModel: Codable {
+    struct MovieDetailsViewModel: Codable, Hashable {
 
         let title: String
         let description: String
@@ -150,12 +146,11 @@ extension MovieDetailsViewController {
             self.description = movie.overview
             self.releaseInfo = movie.releaseInfo
             self.ratingInfo = movie.ratingInfo
-            self.genres = genresList.compactMap { movie.genreIds.contains($0.id) ? $0.name : nil }.joined(separator: ", ")
             self.imageURL = movie.url
+
+            self.genres = genresList
+                .compactMap { movie.genreIds.contains($0.id) ? $0.name : nil }
+                .joined(separator: ", ")
         }
     }
-}
-
-extension MovieDetailsViewController.MovieDetailsViewModel : Hashable {
-
 }

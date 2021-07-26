@@ -8,6 +8,8 @@
 import Foundation
 
 struct Genre {
+    static var all = [Genre]()
+
     let id: Int
     let name: String
 }

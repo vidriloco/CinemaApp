@@ -1,5 +1,5 @@
 //
-//  MovieListViewController.swift
+//  HomeListViewController.swift
 //  CineApp
 //
 //  Created by Alejandro Cruz on 24/07/2021.
@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol HomeViewDelegate {
+protocol HomeListViewDelegate {
     func willDisplayFavoriteMovies(from controller: UIViewController)
 }
 
-class MovieListViewController: UIViewController {
+class HomeListViewController: UIViewController {
     private var nowPlayingViewController: MovieCollectionViewController?
     private var popularViewController: MovieCollectionViewController?
 
-    var delegate: HomeViewDelegate?
+    var delegate: HomeListViewDelegate?
 
     private var stackView: UIStackView = {
         let stackView = UIStackView()

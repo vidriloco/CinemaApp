@@ -36,9 +36,6 @@ class FavoriteMoviesListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "Favorite Movies"
-        
-        movieEntryList = MovieLocalStore.shared.storedMovies ?? []
-        tableView.reloadData()
     }
 }
 
