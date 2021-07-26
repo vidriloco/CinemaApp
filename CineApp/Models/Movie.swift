@@ -18,27 +18,6 @@ struct Movie {
     var overview: String
 }
 
-extension Movie {
-    var url: URL? {
-        return URL(string: imagePath)
-    }
-
-    var releaseInfo: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.autoupdatingCurrent
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-
-        guard let releaseDate = releaseDate else { return "Date of release not available" }
-        let dateOfRelease = dateFormatter.string(from: releaseDate)
-
-        return "Released on: \(dateOfRelease)"
-    }
-
-    var ratingInfo: String {
-        return "Rating: \(rating?.description ?? "0")"
-    }
-}
-
 // MARK:- Struct DTOs transformation helpers
 
 extension MovieRepository.MovieCollection.Movie {

@@ -136,17 +136,29 @@ extension MovieDetailsViewController {
 
         let title: String
         let description: String
-        let releaseInfo: String
         let ratingInfo: String
         let genres: String
         let imageURL: URL?
 
+        var releaseDate: Date?
+
+        var releaseInfo: String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.autoupdatingCurrent
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+
+            guard let releaseDate = releaseDate else { return "Date of release not available" }
+            let dateOfRelease = dateFormatter.string(from: releaseDate)
+
+            return "Released on: \(dateOfRelease)"
+        }
+
         init(movie: Movie, genresList: [Genre]) {
             self.title = movie.title
             self.description = movie.overview
-            self.releaseInfo = movie.releaseInfo
-            self.ratingInfo = movie.ratingInfo
-            self.imageURL = movie.url
+            self.ratingInfo = "Rating: \(movie.rating?.description ?? "0")"
+            self.imageURL = URL(string: movie.imagePath)
+            self.releaseDate = movie.releaseDate
 
             self.genres = genresList
                 .compactMap { movie.genreIds.contains($0.id) ? $0.name : nil }

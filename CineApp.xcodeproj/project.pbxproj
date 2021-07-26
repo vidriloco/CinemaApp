@@ -160,7 +160,6 @@
 			children = (
 				729EEE0E26AE03A6003C2A53 /* Models */,
 				729EEE0526ADF149003C2A53 /* Extensions */,
-				729EEDED26ADE7A7003C2A53 /* Helpers */,
 				729EEDE626ADE552003C2A53 /* BusinessLogic */,
 				72064BAF26AC69E1004B7A3A /* Controllers */,
 				72064BA626AC68B1004B7A3A /* Coordinators */,
@@ -208,10 +207,9 @@
 		72064BAF26AC69E1004B7A3A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7257E82126AF7D2500EFAF01 /* MovieCollectionViewController */,
 				729EEE3726AE2FF3003C2A53 /* MovieDetailsViewController */,
 				72064BB026AC6A07004B7A3A /* HomeListViewController.swift */,
-				72064BB826AC6DAB004B7A3A /* MovieCollectionViewController.swift */,
-				72064BBD26AC6DF7004B7A3A /* MovieCollectionViewCell.swift */,
 				7257E80126AF4B2F00EFAF01 /* FavoriteMoviesListViewController.swift */,
 			);
 			path = Controllers;
@@ -226,15 +224,33 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7257E82126AF7D2500EFAF01 /* MovieCollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72064BB826AC6DAB004B7A3A /* MovieCollectionViewController.swift */,
+				7257E82226AF7D3600EFAF01 /* Views */,
+			);
+			path = MovieCollectionViewController;
+			sourceTree = "<group>";
+		};
+		7257E82226AF7D3600EFAF01 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				72064BBD26AC6DF7004B7A3A /* MovieCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		729EEDE626ADE552003C2A53 /* BusinessLogic */ = {
 			isa = PBXGroup;
 			children = (
+				729EEDED26ADE7A7003C2A53 /* APIHelpers */,
 				729EEDE726ADE56E003C2A53 /* MovieRepository.swift */,
 			);
 			path = BusinessLogic;
 			sourceTree = "<group>";
 		};
-		729EEDED26ADE7A7003C2A53 /* Helpers */ = {
+		729EEDED26ADE7A7003C2A53 /* APIHelpers */ = {
 			isa = PBXGroup;
 			children = (
 				729EEDEE26ADE7CB003C2A53 /* APIEndpoint.swift */,
@@ -242,7 +258,7 @@
 				729EEDFB26ADE83C003C2A53 /* Result.swift */,
 				729EEE0026ADE8DA003C2A53 /* APIError.swift */,
 			);
-			path = Helpers;
+			path = APIHelpers;
 			sourceTree = "<group>";
 		};
 		729EEE0526ADF149003C2A53 /* Extensions */ = {

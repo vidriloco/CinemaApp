@@ -60,7 +60,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     func configure(with movie: Movie) {
         titleLabel.text = movie.title
-        imageView.sd_setImage(with: movie.url, completed: nil)
+        imageView.sd_setImage(with: URL(string: movie.imagePath), completed: nil)
     }
 
     override func prepareForReuse() {
