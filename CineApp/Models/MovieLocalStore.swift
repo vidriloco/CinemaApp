@@ -9,8 +9,6 @@ import Foundation
 
 struct MovieLocalStore {
 
-    static let shared = MovieLocalStore()
-
     private let key = "Movies"
 
     public init() { }
@@ -25,7 +23,7 @@ struct MovieLocalStore {
             UserDefaults.standard.set(data, forKey: key)
 
         } catch {
-            print("Unable to Encode Note (\(error))")
+            print("Unable to Encode Movie due to error: (\(error))")
         }
     }
 
@@ -39,7 +37,7 @@ struct MovieLocalStore {
             UserDefaults.standard.set(data, forKey: key)
 
         } catch {
-            print("Unable to Encode Note (\(error))")
+            print("Unable to Remove Movie due to error: (\(error))")
         }
     }
 
@@ -50,7 +48,7 @@ struct MovieLocalStore {
                 let movies = try decoder.decode([MovieDetailsViewController.MovieDetailsViewModel].self, from: data)
                 return movies.contains { $0 == movie }
             } catch {
-                print("Unable to Decode Note (\(error))")
+                print("Unable to Peek into Movie due to error: (\(error))")
             }
         }
 

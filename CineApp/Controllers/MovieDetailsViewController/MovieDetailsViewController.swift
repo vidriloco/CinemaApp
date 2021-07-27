@@ -24,6 +24,7 @@ class MovieDetailsViewController: UITableViewController {
     }
 
     private var detailEntries = [MovieDetailEntries]()
+    private let movieStore: MovieLocalStore
 
     var viewModel: MovieDetailsViewModel? {
         didSet {
@@ -35,7 +36,9 @@ class MovieDetailsViewController: UITableViewController {
     private let movieTextIdentifier = String(describing: MovieTextViewCell.self)
     private let moviePosterIdentifier = String(describing: MoviePosterViewCell.self)
 
-    public init() {
+    public init(movieStore: MovieLocalStore) {
+        self.movieStore = movieStore
+
         super.init(nibName: nil, bundle: nil)
         title = "Movie Details"
 
@@ -64,7 +67,7 @@ class MovieDetailsViewController: UITableViewController {
     private func updateNavigationItems() {
         guard let movieDetails = viewModel else { return }
 
-        let title = MovieLocalStore.shared.contains(movieDetails) ? "Unfavorite" : "Favorite"
+        let title = movieStore.contains(movieDetails) ? "Unfavorite" : "Favorite"
 
         let favoriteButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(updateMovieFavoriteStatus))
         self.navigationItem.rightBarButtonItem  = favoriteButton

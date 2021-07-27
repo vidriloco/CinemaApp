@@ -13,30 +13,31 @@ protocol Coordinator {
 
 class RootCoordinator: Coordinator {
 
-    let window: UIWindow
-    let rootViewController: UINavigationController
+    private let window: UIWindow
 
-    let homeListCoordinator: HomeListCoordinator
+    private let repository = MovieRepository()
 
-    let movieRepository = MovieRepository()
+    private var homeListCoordinator: HomeListCoordinator?
+
+    private let rootViewController: UINavigationController
 
     init(window: UIWindow) {
         self.window = window
 
         self.rootViewController = UINavigationController()
-        self.homeListCoordinator = HomeListCoordinator(presenter: rootViewController, repository: movieRepository)
+        self.homeListCoordinator = HomeListCoordinator(presenter: rootViewController, repository: repository)
     }
 
     func start() {
         fetchGenreList()
         
         window.rootViewController = rootViewController
-        homeListCoordinator.start()
+        homeListCoordinator?.start()
         window.makeKeyAndVisible()
     }
 
     func fetchGenreList() {
-        movieRepository.getMovieGenres { genres in
+        repository.getMovieGenres { genres in
             Genre.all = genres
         } failure: { _ in
             let alertViewControlller = UIAlertController(title: "We could not load the list of movie genres",

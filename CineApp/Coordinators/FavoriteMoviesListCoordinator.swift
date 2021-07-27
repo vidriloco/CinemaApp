@@ -10,16 +10,22 @@ import UIKit
 class FavoriteMoviesListCoordinator: Coordinator {
 
     private let presenter: UINavigationController
-    private let favoriteMoviesViewController: FavoriteMoviesListViewController
+    private var favoriteMoviesViewController: FavoriteMoviesListViewController?
+
+    private var movieStore = MovieLocalStore()
 
     init(presenter: UINavigationController) {
         self.presenter = presenter
         self.favoriteMoviesViewController = FavoriteMoviesListViewController()
-        self.favoriteMoviesViewController.delegate = self
+        self.favoriteMoviesViewController?.delegate = self
     }
 
     func start() {
-        favoriteMoviesViewController.movieEntryList = MovieLocalStore.shared.storedMovies ?? []
+        guard let favoriteMoviesViewController = favoriteMoviesViewController else {
+            return
+        }
+
+        favoriteMoviesViewController.movieEntryList = movieStore.storedMovies ?? []
         favoriteMoviesViewController.delegate = self
 
         presenter.pushViewController(favoriteMoviesViewController, animated: true)
@@ -28,7 +34,7 @@ class FavoriteMoviesListCoordinator: Coordinator {
 
 extension FavoriteMoviesListCoordinator: FavoriteMoviesListDelegate {
     func didSelect(movieDetailsViewModel: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
-        let movieDetailsViewController = MovieDetailsViewController()
+        let movieDetailsViewController = MovieDetailsViewController(movieStore: movieStore)
         movieDetailsViewController.delegate = self
 
         movieDetailsViewController.viewModel = movieDetailsViewModel
@@ -38,9 +44,9 @@ extension FavoriteMoviesListCoordinator: FavoriteMoviesListDelegate {
 
 extension FavoriteMoviesListCoordinator: MovieDetailsDelegate {
     func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
-        if MovieLocalStore.shared.contains(movie) {
+        if movieStore.contains(movie) {
 
-            MovieLocalStore.shared.delete(movie)
+            movieStore.delete(movie)
 
             let viewController = UIAlertController(title: "Message",
                                                    message: "\(movie.title) was removed from your favorite movies",
@@ -50,7 +56,7 @@ extension FavoriteMoviesListCoordinator: MovieDetailsDelegate {
             controller.present(viewController, animated: true, completion: nil)
 
         } else {
-            MovieLocalStore.shared.save(movie)
+            movieStore.save(movie)
 
             let viewController = UIAlertController(title: "Message",
                                                    message: "\(movie.title) was saved to your favorite movies",
@@ -60,6 +66,6 @@ extension FavoriteMoviesListCoordinator: MovieDetailsDelegate {
             controller.present(viewController, animated: true, completion: nil)
         }
 
-        favoriteMoviesViewController.movieEntryList = MovieLocalStore.shared.storedMovies ?? []
+        favoriteMoviesViewController?.movieEntryList = movieStore.storedMovies ?? []
     }
 }

@@ -10,18 +10,22 @@ import UIKit
 class MovieDetailsCoordinator: Coordinator {
 
     private let presenter: UINavigationController
-    let movieDetailsViewController: MovieDetailsViewController
+
+    private var movieDetailsViewController: MovieDetailsViewController?
+
     var movie: Movie?
     var genreList: [Genre]?
 
+    private var movieStore = MovieLocalStore()
+
     init(presenter: UINavigationController) {
         self.presenter = presenter
-        self.movieDetailsViewController = MovieDetailsViewController()
-        self.movieDetailsViewController.delegate = self
+        self.movieDetailsViewController = MovieDetailsViewController(movieStore: movieStore)
+        self.movieDetailsViewController?.delegate = self
     }
 
     func start() {
-        guard let movie = movie else { return }
+        guard let movie = movie, let movieDetailsViewController = movieDetailsViewController else { return }
         let movieDetailsVM = MovieDetailsViewController.MovieDetailsViewModel(movie: movie, genresList: Genre.all)
         movieDetailsViewController.viewModel = movieDetailsVM
         
@@ -31,9 +35,9 @@ class MovieDetailsCoordinator: Coordinator {
 
 extension MovieDetailsCoordinator: MovieDetailsDelegate {
     func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
-        if MovieLocalStore.shared.contains(movie) {
+        if movieStore.contains(movie) {
 
-            MovieLocalStore.shared.delete(movie)
+            movieStore.delete(movie)
 
             let viewController = UIAlertController(title: "Message",
                                                    message: "\(movie.title) was removed from your favorite movies",
@@ -43,7 +47,7 @@ extension MovieDetailsCoordinator: MovieDetailsDelegate {
             controller.present(viewController, animated: true, completion: nil)
 
         } else {
-            MovieLocalStore.shared.save(movie)
+            movieStore.save(movie)
 
             let viewController = UIAlertController(title: "Message",
                                                    message: "\(movie.title) was saved to your favorite movies",
