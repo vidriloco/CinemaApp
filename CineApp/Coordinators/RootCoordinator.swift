@@ -36,7 +36,9 @@ class RootCoordinator: Coordinator {
         homeListCoordinator?.start()
         window.makeKeyAndVisible()
     }
+}
 
+private extension RootCoordinator {
     func fetchGenreList() {
         displayLoadingIndicator()
 
@@ -45,7 +47,7 @@ class RootCoordinator: Coordinator {
             self?.hideLoadingIndicator()
         } failure: { [weak self] _ in
             self?.hideLoadingIndicator()
-            
+
             let alertViewControlller = UIAlertController(title: "We could not load the list of movie genres",
                                                          message: "Please check your connection and try again.",
                                                          preferredStyle: .alert)
@@ -55,9 +57,7 @@ class RootCoordinator: Coordinator {
             }))
         }
     }
-}
-
-private extension RootCoordinator {
+    
     func displayLoadingIndicator() {
         let localWindow = window
         DispatchQueue.main.async {

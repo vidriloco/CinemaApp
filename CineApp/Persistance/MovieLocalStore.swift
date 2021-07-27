@@ -23,7 +23,7 @@ struct MovieLocalStore {
             UserDefaults.standard.set(data, forKey: key)
 
         } catch {
-            print("Unable to Encode Movie due to error: (\(error))")
+            print("Unable to Save Movie due to error: (\(error))")
         }
     }
 
