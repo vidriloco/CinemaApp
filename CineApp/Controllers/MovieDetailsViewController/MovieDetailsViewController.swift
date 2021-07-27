@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 protocol MovieDetailsDelegate {
-    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController)
+    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.ViewModel, from controller: UIViewController)
 }
 
 class MovieDetailsViewController: UITableViewController {
@@ -26,7 +26,7 @@ class MovieDetailsViewController: UITableViewController {
     private var detailEntries = [MovieDetailEntries]()
     private let movieStore: MovieLocalStore
 
-    var viewModel: MovieDetailsViewModel? {
+    var viewModel: ViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
             configure(with: viewModel)
@@ -73,7 +73,7 @@ class MovieDetailsViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem  = favoriteButton
     }
 
-    private func configure(with viewModel: MovieDetailsViewModel) {
+    private func configure(with viewModel: ViewModel) {
 
         self.detailEntries = [
             .image(url: viewModel.imageURL),
@@ -135,7 +135,7 @@ extension MovieDetailsViewController {
         static let imageHeight: CGFloat = 400
     }
 
-    struct MovieDetailsViewModel: Codable, Hashable {
+    struct ViewModel: Codable, Hashable {
 
         let title: String
         let description: String

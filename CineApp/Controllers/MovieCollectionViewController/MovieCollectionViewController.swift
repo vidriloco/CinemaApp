@@ -105,7 +105,7 @@ extension MovieCollectionViewController : UICollectionViewDataSource {
         if let cell = dequeuedCell as? MovieCollectionViewCell {
             let movie = movies[indexPath.item]
             
-            cell.configure(with: movie)
+            cell.configure(with: MovieCollectionViewCell.ViewModel(with: movie))
 
             return cell
         }

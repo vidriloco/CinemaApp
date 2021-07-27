@@ -10,6 +10,16 @@ import SDWebImage
 
 class MovieCollectionViewCell: UICollectionViewCell {
 
+    struct ViewModel {
+        let title: String
+        let imagePath: String
+
+        init(with movie: Movie) {
+            self.title = movie.title
+            self.imagePath = movie.imagePath
+        }
+    }
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,9 +70,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with movie: Movie) {
-        titleLabel.text = movie.title
-        imageView.sd_setImage(with: URL(string: movie.imagePath), completed: nil)
+    func configure(with viewModel: ViewModel) {
+        titleLabel.text = viewModel.title
+        imageView.sd_setImage(with: URL(string: viewModel.imagePath), completed: nil)
     }
 
     override func prepareForReuse() {

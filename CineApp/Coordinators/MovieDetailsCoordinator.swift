@@ -26,7 +26,7 @@ class MovieDetailsCoordinator: Coordinator {
 
     func start() {
         guard let movie = movie, let movieDetailsViewController = movieDetailsViewController else { return }
-        let movieDetailsVM = MovieDetailsViewController.MovieDetailsViewModel(movie: movie, genresList: Genre.all)
+        let movieDetailsVM = MovieDetailsViewController.ViewModel(movie: movie, genresList: Genre.all)
         movieDetailsViewController.viewModel = movieDetailsVM
         
         presenter.pushViewController(movieDetailsViewController, animated: true)
@@ -34,7 +34,7 @@ class MovieDetailsCoordinator: Coordinator {
 }
 
 extension MovieDetailsCoordinator: MovieDetailsDelegate {
-    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
+    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.ViewModel, from controller: UIViewController) {
         if movieStore.contains(movie) {
 
             movieStore.delete(movie)

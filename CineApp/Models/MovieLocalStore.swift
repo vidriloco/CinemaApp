@@ -13,7 +13,7 @@ struct MovieLocalStore {
 
     public init() { }
 
-    public func save(_ movie: MovieDetailsViewController.MovieDetailsViewModel) {
+    public func save(_ movie: MovieDetailsViewController.ViewModel) {
         do {
             var movies = storedMovies
             movies?.append(movie)
@@ -27,7 +27,7 @@ struct MovieLocalStore {
         }
     }
 
-    public func delete(_ movie: MovieDetailsViewController.MovieDetailsViewModel) {
+    public func delete(_ movie: MovieDetailsViewController.ViewModel) {
         do {
             var movies = storedMovies
             movies?.removeAll(where: { $0 == movie })
@@ -41,11 +41,11 @@ struct MovieLocalStore {
         }
     }
 
-    public func contains(_ movie: MovieDetailsViewController.MovieDetailsViewModel) -> Bool {
+    public func contains(_ movie: MovieDetailsViewController.ViewModel) -> Bool {
         if let data = UserDefaults.standard.data(forKey: key) {
             do {
                 let decoder = JSONDecoder()
-                let movies = try decoder.decode([MovieDetailsViewController.MovieDetailsViewModel].self, from: data)
+                let movies = try decoder.decode([MovieDetailsViewController.ViewModel].self, from: data)
                 return movies.contains { $0 == movie }
             } catch {
                 print("Unable to Peek into Movie due to error: (\(error))")
@@ -55,11 +55,11 @@ struct MovieLocalStore {
         return false
     }
 
-    public var storedMovies: [MovieDetailsViewController.MovieDetailsViewModel]? {
+    public var storedMovies: [MovieDetailsViewController.ViewModel]? {
         if let data = UserDefaults.standard.data(forKey: key) {
             do {
                 let decoder = JSONDecoder()
-                return try decoder.decode([MovieDetailsViewController.MovieDetailsViewModel].self, from: data)
+                return try decoder.decode([MovieDetailsViewController.ViewModel].self, from: data)
             } catch {
                 return nil
             }

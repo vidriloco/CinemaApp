@@ -33,7 +33,7 @@ class FavoriteMoviesListCoordinator: Coordinator {
 }
 
 extension FavoriteMoviesListCoordinator: FavoriteMoviesListDelegate {
-    func didSelect(movieDetailsViewModel: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
+    func didSelect(movieDetailsViewModel: MovieDetailsViewController.ViewModel, from controller: UIViewController) {
         let movieDetailsViewController = MovieDetailsViewController(movieStore: movieStore)
         movieDetailsViewController.delegate = self
 
@@ -43,7 +43,7 @@ extension FavoriteMoviesListCoordinator: FavoriteMoviesListDelegate {
 }
 
 extension FavoriteMoviesListCoordinator: MovieDetailsDelegate {
-    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController) {
+    func updateMovieFavoriteStatus(_ movie: MovieDetailsViewController.ViewModel, from controller: UIViewController) {
         if movieStore.contains(movie) {
 
             movieStore.delete(movie)

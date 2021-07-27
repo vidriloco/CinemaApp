@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FavoriteMoviesListDelegate {
-    func didSelect(movieDetailsViewModel: MovieDetailsViewController.MovieDetailsViewModel, from controller: UIViewController)
+    func didSelect(movieDetailsViewModel: MovieDetailsViewController.ViewModel, from controller: UIViewController)
 }
 
 class FavoriteMoviesListViewController: UITableViewController {
@@ -21,7 +21,7 @@ class FavoriteMoviesListViewController: UITableViewController {
         return view
     }()
 
-    var movieEntryList = [MovieDetailsViewController.MovieDetailsViewModel]() {
+    var movieEntryList = [MovieDetailsViewController.ViewModel]() {
         didSet {
             if movieEntryList.isEmpty {
                 setEmptyView()
