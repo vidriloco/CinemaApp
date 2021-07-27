@@ -15,8 +15,19 @@ class FavoriteMoviesListViewController: UITableViewController {
 
     public var delegate: FavoriteMoviesListDelegate?
 
+    let emptyView: EmptyListView = {
+        let view = EmptyListView(with: "No movies to display",
+                                 message: "Explore the app and fav some :)")
+        return view
+    }()
+
     var movieEntryList = [MovieDetailsViewController.MovieDetailsViewModel]() {
         didSet {
+            if movieEntryList.isEmpty {
+                setEmptyView()
+            } else {
+                clearEmptyView()
+            }
             tableView.reloadData()
         }
     }
@@ -63,5 +74,16 @@ extension FavoriteMoviesListViewController {
         let movieEntry = movieEntryList[indexPath.row]
 
         delegate?.didSelect(movieDetailsViewModel: movieEntry, from: self)
+    }
+}
+
+extension FavoriteMoviesListViewController {
+    func setEmptyView() {
+        tableView.backgroundView = emptyView
+        tableView.separatorStyle = .none
+    }
+    func clearEmptyView() {
+        tableView.backgroundView = nil
+        tableView.separatorStyle = .singleLine
     }
 }
