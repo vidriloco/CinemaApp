@@ -11,7 +11,6 @@
 		7206487926A5DB44004B7A3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7206487826A5DB44004B7A3A /* AppDelegate.swift */; };
 		7206487D26A5DB44004B7A3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7206487C26A5DB44004B7A3A /* ViewController.swift */; };
 		7206488026A5DB44004B7A3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7206487E26A5DB44004B7A3A /* Main.storyboard */; };
-		7206488326A5DB44004B7A3A /* CineApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7206488126A5DB44004B7A3A /* CineApp.xcdatamodeld */; };
 		7206488526A5DB45004B7A3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7206488426A5DB45004B7A3A /* Assets.xcassets */; };
 		7206488826A5DB45004B7A3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7206488626A5DB45004B7A3A /* LaunchScreen.storyboard */; };
 		7206489326A5DB46004B7A3A /* CineAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7206489226A5DB46004B7A3A /* CineAppTests.swift */; };
@@ -68,7 +67,6 @@
 		7206487826A5DB44004B7A3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7206487C26A5DB44004B7A3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7206487F26A5DB44004B7A3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7206488226A5DB44004B7A3A /* CineApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CineApp.xcdatamodel; sourceTree = "<group>"; };
 		7206488426A5DB45004B7A3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7206488726A5DB45004B7A3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7206488926A5DB45004B7A3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -169,7 +167,6 @@
 				7206488426A5DB45004B7A3A /* Assets.xcassets */,
 				7206488626A5DB45004B7A3A /* LaunchScreen.storyboard */,
 				7206488926A5DB45004B7A3A /* Info.plist */,
-				7206488126A5DB44004B7A3A /* CineApp.xcdatamodeld */,
 				729EEDCE26AC77EC003C2A53 /* SceneDelegate.swift */,
 			);
 			path = CineApp;
@@ -551,7 +548,6 @@
 			files = (
 				729EEDDF26AD9B04003C2A53 /* MovieDetailsViewController.swift in Sources */,
 				729EEE0726ADF156003C2A53 /* NSObject.swift in Sources */,
-				7206488326A5DB44004B7A3A /* CineApp.xcdatamodeld in Sources */,
 				7206487D26A5DB44004B7A3A /* ViewController.swift in Sources */,
 				729EEE3026AE2FCE003C2A53 /* MovieTextViewCell.swift in Sources */,
 				729EEDE826ADE56E003C2A53 /* MovieRepository.swift in Sources */,
@@ -911,19 +907,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		7206488126A5DB44004B7A3A /* CineApp.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				7206488226A5DB44004B7A3A /* CineApp.xcdatamodel */,
-			);
-			currentVersion = 7206488226A5DB44004B7A3A /* CineApp.xcdatamodel */;
-			path = CineApp.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 7206486D26A5DB44004B7A3A /* Project object */;
 }
