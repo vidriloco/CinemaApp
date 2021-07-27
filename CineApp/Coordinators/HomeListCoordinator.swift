@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class HomeListCoordinator: Coordinator {
     private let presenter: UINavigationController
@@ -39,11 +40,13 @@ class HomeListCoordinator: Coordinator {
     private func buildNowPlayingMoviesViewController() {
         nowPlayingMoviesViewController.delegate = self
 
+        displayLoadingIndicator()
         repository.getMoviesNowPlaying { [weak self] movies in
 
             self?.nowPlayingMoviesViewController.movies = movies
-
-        } failure: { error in
+            self?.hideLoadingIndicator()
+        } failure: { [weak self] error in
+            self?.hideLoadingIndicator()
             let alertViewControlller = UIAlertController(title: "Ooops",
                                                          message: "We could not load the list of movies now being played",
                                                          preferredStyle: .alert)
@@ -58,11 +61,13 @@ class HomeListCoordinator: Coordinator {
     private func buildPopularMoviesViewController() {
         popularMoviesViewController.delegate = self
 
+        displayLoadingIndicator()
         repository.getPopularMovies { [weak self] movies in
 
             self?.popularMoviesViewController.movies = movies
-
-        } failure: { error in
+            self?.hideLoadingIndicator()
+        } failure: { [weak self] error in
+            self?.hideLoadingIndicator()
             let alertViewControlller = UIAlertController(title: "Ooops",
                                                          message: "We could not load the list of popular movies",
                                                          preferredStyle: .alert)
@@ -90,4 +95,22 @@ extension HomeListCoordinator: HomeListViewDelegate {
         favoriteMoviesCoordinator?.start()
     }
     
+}
+
+private extension HomeListCoordinator {
+    func displayLoadingIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let view = self?.presenter.view else { return }
+
+            MBProgressHUD.showAdded(to: view, animated: true)
+        }
+    }
+
+    func hideLoadingIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let view = self?.presenter.view else { return }
+
+            MBProgressHUD.hide(for: view, animated: true)
+        }
+    }
 }

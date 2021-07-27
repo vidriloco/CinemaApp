@@ -7,6 +7,7 @@ target 'CineApp' do
 
   # Pods for CineApp
   pod 'SDWebImage', '~> 5.0'
+  pod 'MBProgressHUD', '~> 1.2.0'  
 
   target 'CineAppTests' do
     inherit! :search_paths

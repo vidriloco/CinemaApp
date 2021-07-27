@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 protocol Coordinator {
     func start()
@@ -37,9 +38,14 @@ class RootCoordinator: Coordinator {
     }
 
     func fetchGenreList() {
-        repository.getMovieGenres { genres in
+        displayLoadingIndicator()
+
+        repository.getMovieGenres { [weak self] genres in
             Genre.all = genres
-        } failure: { _ in
+            self?.hideLoadingIndicator()
+        } failure: { [weak self] _ in
+            self?.hideLoadingIndicator()
+            
             let alertViewControlller = UIAlertController(title: "We could not load the list of movie genres",
                                                          message: "Please check your connection and try again.",
                                                          preferredStyle: .alert)
@@ -47,6 +53,22 @@ class RootCoordinator: Coordinator {
             alertViewControlller.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [weak self] _ in
                 self?.fetchGenreList()
             }))
+        }
+    }
+}
+
+private extension RootCoordinator {
+    func displayLoadingIndicator() {
+        let localWindow = window
+        DispatchQueue.main.async {
+            MBProgressHUD.showAdded(to: localWindow, animated: true)
+        }
+    }
+
+    func hideLoadingIndicator() {
+        let localWindow = window
+        DispatchQueue.main.async {
+            MBProgressHUD.hide(for: localWindow, animated: true)
         }
     }
 }
